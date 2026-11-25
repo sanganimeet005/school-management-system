@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Categories - EduPrime{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Select a Category</h2>
+            <p class="text-muted">Choose a category to view its free dedicated courses</p>
+        </div>
+        
+        <div class="row g-4 justify-content-center">
+            {% for c in cat %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-0 shadow-sm h-100 course-card text-center">
+                    <div class="card-body p-4 d-flex flex-column align-items-center">
+                        <div class="badge bg-primary-subtle text-primary p-3 rounded-circle mb-3 fs-3">
+                            {% if 'Web' in c.cat_name %}
+                                <i class="fa-solid fa-code"></i>
+                            {% elif 'App' in c.cat_name %}
+                                <i class="fa-solid fa-mobile-screen-button"></i>
+                            {% elif 'AI' in c.cat_name or 'Machine' in c.cat_name %}
+                                <i class="fa-solid fa-brain"></i>
+                            {% else %}
+                                <i class="fa-solid fa-layer-group"></i>
+                            {% endif %}
+                        </div>
+                        <h4 class="fw-bold mb-2">
+                            <a href="{{ url_for('category_courses', cat_id=c.cat_id) }}" class="text-decoration-none text-dark">
+                                {{ c.cat_name }}
+                            </a>
+                        </h4>
+                        <p class="text-muted small flex-grow-1">
+                            {{ c.cat_description or ('Explore high quality courses available under ' + c.cat_name + '.') }}
+                        </p>
+                        <a href="{{ url_for('category_courses', cat_id=c.cat_id) }}" class="btn btn-primary rounded-pill btn-sm mt-3 px-4">
+                            Explore Courses
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12 text-center text-muted py-4">
+                <h5>No categories found in database.</h5>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

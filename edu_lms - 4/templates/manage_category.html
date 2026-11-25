@@ -1,0 +1,96 @@
+{% extends 'admin_base.html' %}
+
+{% block content %}
+
+<style>
+    .user-table-container {
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        margin-top: 20px;
+    }
+
+    .user-table-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #222;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .user-table {
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+        border-radius: 10px;
+    }
+
+    .user-table th {
+        background: #212529;
+        color: white;
+        padding: 14px;
+        text-align: left;
+    }
+
+    .user-table td {
+        padding: 14px;
+        border-bottom: 1px solid #eeeeee;
+        color: #333;
+    }
+
+    .user-table tbody tr:hover {
+        background: #f8f9fa;
+    }
+</style>
+
+<div class="user-table-container">
+
+    <div class="user-table-title">
+        <span>Manage Categories</span>
+        <a href="{{ url_for('add_category') }}" class="btn btn-primary btn-sm rounded-pill px-3">+ Add New Category</a>
+    </div>
+
+    <table class="user-table">
+
+        <thead>
+            <tr>
+                <th style="width: 15%;">Category ID</th>
+                <th style="width: 25%;">Category Name</th>
+                <th style="width: 45%;">Description</th>
+                <th style="width: 15%;">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for c in cat %}
+
+            <tr>
+                <td><strong>#{{ c.cat_id }}</strong></td>
+                <td><span class="badge bg-primary-subtle text-primary fs-6">{{ c.cat_name }}</span></td>
+                <td class="text-muted small">{{ c.cat_description or 'No description provided.' }}</td>
+                <td>
+                    <a href="{{ url_for('delete_category', cat_id=c.cat_id) }}" 
+                       class="btn btn-danger btn-sm rounded-pill px-3"
+                       onclick="return confirm('Are you sure you want to delete category \'{{ c.cat_name }}\'? Related courses will also be deleted.');">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+
+            {% else %}
+            <tr>
+                <td colspan="4" class="text-center text-muted py-4">No categories found.</td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

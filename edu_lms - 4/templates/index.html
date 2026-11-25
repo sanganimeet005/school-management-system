@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - EduPrime{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-white border-bottom">
+    <div class="container">
+        <div class="row align-items-center gy-4">
+            <div class="col-lg-6">
+                <span class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill fw-semibold mb-3">🚀 Learn Without Limits</span>
+                <h1 class="display-4 fw-bold mb-3">Unlock Your Potential with Modern <span class="text-primary">Online Skills</span></h1>
+                <p class="lead text-muted mb-4">Join over 50,000+ students mastering Tech, Design, Business, and AI for FREE.</p>
+                <a href="{{ url_for('categories') }}" class="btn btn-primary btn-lg rounded-pill px-4">Browse Categories <i class="fa-solid fa-arrow-right ms-2 fs-6"></i></a>
+            </div>
+            <div class="col-lg-6 text-center">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" class="img-fluid rounded-4 shadow" alt="Learning">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Centered Categories Grid (From Database) -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Explore Our Skill Domains</h2>
+            <p class="text-muted">Select a category below to explore FREE courses</p>
+        </div>
+     
+        <div class="row g-4 justify-content-center">
+            {% for cat in categories %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-0 shadow-sm h-100 course-card text-center">
+                    <div class="card-body p-4 d-flex flex-column align-items-center">
+                        <div class="badge bg-primary-subtle text-primary p-3 rounded-circle mb-3 fs-3">
+                            {% if 'Web' in cat.cat_name %}
+                                <i class="fa-solid fa-code"></i>
+                            {% elif 'App' in cat.cat_name %}
+                                <i class="fa-solid fa-mobile-screen-button"></i>
+                            {% elif 'AI' in cat.cat_name or 'Machine' in cat.cat_name %}
+                                <i class="fa-solid fa-brain"></i>
+                            {% else %}
+                                <i class="fa-solid fa-layer-group"></i>
+                            {% endif %}
+                        </div>
+                        
+                        <h4 class="fw-bold mb-2">
+                            <a href="{{ url_for('category_courses', cat_id=cat.cat_id) }}" class="text-decoration-none text-dark">
+                                {{ cat.cat_name }}
+                            </a>
+                        </h4>
+                        
+                        <p class="text-muted small flex-grow-1">{{ cat.cat_description or ('Explore all courses available under ' + cat.cat_name + '.') }}</p>
+                        
+                        <a href="{{ url_for('category_courses', cat_id=cat.cat_id) }}" class="btn btn-primary rounded-pill btn-sm mt-3 px-4">
+                            Explore Courses
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12 text-center text-muted py-4">
+                <h5>No categories found in database.</h5>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

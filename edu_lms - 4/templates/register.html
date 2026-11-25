@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - EduPrime{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card border-0 shadow-lg p-4 p-md-5 rounded-4">
+                    <div class="text-center mb-4">
+                        <div class="bg-primary-subtle text-primary d-inline-flex p-3 rounded-circle fs-3 mb-2">
+                            <i class="fa-solid fa-user-plus"></i>
+                        </div>
+                        <h3 class="fw-bold">Create Account</h3>
+                        <p class="text-muted small">Join EduPrime to start learning</p>
+                    </div>
+
+                    <form action="{{ url_for('register') }}" method="POST" id="registerForm">
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">Full Name</label>
+                            <input type="text" name="name" class="form-control rounded-3 py-2" placeholder="meet patel" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">Email Address</label>
+                            <input type="email" name="email" class="form-control rounded-3 py-2" placeholder="name@example.com" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">Password</label>
+                            <input type="password" name="password" id="password" class="form-control rounded-3 py-2" placeholder="e.g. abc@123" required>
+                            <div id="passwordError" class="text-danger small mt-1" style="display: none;">
+                                Password cannot contain only numbers! At least 1 letter is required.
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-gradient rounded-pill w-100 py-2 fw-semibold mt-3">
+                            Register
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <small class="text-muted">Already have an account? <a href="{{ url_for('login') }}" class="text-primary fw-semibold text-decoration-none">Login here</a></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+    var password = document.getElementById('password').value;
+    var errorDiv = document.getElementById('passwordError');
+    var hasLetter = /[a-zA-Z]/.test(password);
+
+    if (!hasLetter) {
+        e.preventDefault();
+        errorDiv.style.display = 'block';
+    } else {
+        errorDiv.style.display = 'none';
+    }
+});
+</script>
+{% endblock %}

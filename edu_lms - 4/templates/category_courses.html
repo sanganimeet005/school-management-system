@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if selected_category %}{{ selected_category.cat_name }} Courses{% elif cat_id %}Category Not Found{% else %}All Courses{% endif %} - EduPrime
+{% endblock %}
+
+{% block content %}
+<section class="bg-white py-5 border-bottom text-center">
+    <div class="container">
+        {% if selected_category %}
+            <span class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill fw-semibold mb-2">Category</span>
+            <h1 class="fw-bold mb-2">{{ selected_category.cat_name }} Courses</h1>
+            <p class="text-muted mb-0 lead fs-6">{{ selected_category.cat_description or 'Explore our comprehensive courses under ' + selected_category.cat_name + '.' }}</p>
+        {% elif cat_id %}
+            <span class="badge bg-secondary-subtle text-secondary px-3 py-2 rounded-pill fw-semibold mb-2">Category Removed</span>
+            <h1 class="fw-bold mb-2">Category Not Found</h1>
+            <p class="text-muted mb-0 lead fs-6">This category does not exist or has been deleted.</p>
+        {% else %}
+            <span class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill fw-semibold mb-2">Explore</span>
+            <h1 class="fw-bold mb-2">All Courses</h1>
+            <p class="text-muted mb-0 lead fs-6">Browse our complete collection of top-rated technology courses.</p>
+        {% endif %}
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row g-4 justify-content-center">
+            {% for course in courses %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm course-card overflow-hidden d-flex flex-column bg-white">
+                    <img src="{{ url_for('static', filename='images/' + (course.image_path or course.course_img or 'appdev.png')) }}" 
+                         class="card-img-top" 
+                         alt="{{ course.course_name }}" 
+                         style="height: 220px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column p-4">
+                        <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2 w-auto mb-2 align-self-start">
+                            {{ course.cat_name or 'Special' }}
+                        </span>
+                        <h4 class="fw-bold text-dark mb-2">{{ course.course_name }}</h4>
+                        <p class="text-muted small mb-4 flex-grow-1">{{ course.description }}</p>
+                        <div class="pt-3 border-top d-flex justify-content-between align-items-center mt-auto">
+                            {% if course.price and course.price > 0 %}
+                                <span class="fs-4 fw-bold text-primary">₹{{ "%.0f"|format(course.price) }}</span>
+                            {% else %}
+                                <span class="fs-4 fw-bold text-success">FREE</span>
+                            {% endif %}
+                            <a href="{{ url_for('course_detail', course_id=course.course_id) }}" class="btn btn-primary rounded-pill px-4">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12 text-center py-5">
+                <div class="p-5 bg-white rounded-4 shadow-sm">
+                    <i class="fa-solid fa-graduation-cap text-muted fs-1 mb-3"></i>
+                    <h4 class="fw-bold text-dark">No courses found.</h4>
+                    <p class="text-muted">No courses are available in this selection.</p>
+                    <a href="{{ url_for('categories') }}" class="btn btn-primary rounded-pill px-4 mt-2">Browse All Categories</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="{{ url_for('categories') }}" class="btn btn-outline-secondary rounded-pill px-4">
+                <i class="fa-solid fa-arrow-left me-2"></i>View All Categories
+            </a>
+            {% if selected_category or cat_id %}
+            <a href="{{ url_for('category_courses') }}" class="btn btn-outline-primary rounded-pill px-4 ms-2">
+                View All Courses
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - EduPrime{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <h2 class="fw-bold mb-4">My Student Dashboard</h2>
+        
+        <div class="row g-4 mb-4">
+            <div class="col-md-4">
+                <div class="p-4 border-0 shadow-sm rounded-4 bg-white text-center">
+                    <h6 class="text-muted fw-semibold">Enrolled Courses</h6>
+                    <h2 class="text-primary fw-bold mb-0">2</h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-4 border-0 shadow-sm rounded-4 bg-white text-center">
+                    <h6 class="text-muted fw-semibold">Completed Courses</h6>
+                    <h2 class="text-success fw-bold mb-0">0</h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-4 border-0 shadow-sm rounded-4 bg-white text-center">
+                    <h6 class="text-muted fw-semibold">Certificates Earned</h6>
+                    <h2 class="text-warning fw-bold mb-0">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <h4 class="fw-bold mb-3">My Enrolled Courses</h4>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm p-3 rounded-4 bg-white">
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="{{ url_for('static', filename='images/webdev.png') }}" alt="Course" class="rounded-3" style="width: 100px; height: 80px; object-fit: cover;">
+                        <div class="flex-grow-1">
+                            <h6 class="fw-bold mb-1">Full-Stack Web Development Bootcamp</h6>
+                            <small class="text-muted">Progress: 0%</small>
+                            <div class="progress mt-2" style="height: 6px;">
+                                <div class="progress-bar bg-primary" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <a href="{{ url_for('course_detail', course_id=1) }}" class="btn btn-primary btn-sm rounded-pill px-3">Start</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm p-3 rounded-4 bg-white">
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="{{ url_for('static', filename='images/ai&ml.png') }}" alt="Course" class="rounded-3" style="width: 100px; height: 80px; object-fit: cover;">
+                        <div class="flex-grow-1">
+                            <h6 class="fw-bold mb-1">Applied AI & Machine Learning</h6>
+                            <small class="text-muted">Progress: 15%</small>
+                            <div class="progress mt-2" style="height: 6px;">
+                                <div class="progress-bar bg-primary" style="width: 15%"></div>
+                            </div>
+                        </div>
+                        <a href="{{ url_for('course_detail', course_id=3) }}" class="btn btn-primary btn-sm rounded-pill px-3">Continue</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
